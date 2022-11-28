@@ -17,11 +17,60 @@ const initialGrid = [
   false,
 ];
 
-const nextIndexes = [
-  [1, 4], // (1,1) - down or right
-  [0, 3], // (1,2) - left or right
-  [2, 5], // (1,3) - left or down
+const next = [
+  // (1,1)
+  {
+    right: 1,
+    down: 3,
+  },
+  // (1, 2)
+  {
+    left: 0,
+    right: 2,
+    down: 4,
+  },
+  // (1,3)
+  {
+    left: 0,
+    down: 5,
+  },
+  // (2,1)
+  {
+    up: 0,
+    right: 4,
+    down: 6,
+  },
+  // (2,2)
+  {
+    up: 1,
+    down: 7,
+    left: 3,
+    right: 5,
+  },
+  // (2,3)
+  {
+    up: 2,
+    down: 8,
+    left: 4,
+  },
+  // (3,1)
+  {
+    up: 3,
+    right: 7,
+  },
+  // (3,2)
+  {
+    up: 4,
+    left: 6,
+    right: 8,
+  },
+  // (3,3)
+  {
+    up: 5,
+    left: 7,
+  },
 ];
+
 export default function AppFunctional(props) {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
@@ -64,39 +113,39 @@ export default function AppFunctional(props) {
     // Use a POST request to send a payload to the server.
   }
   return (
-    <div id='wrapper' className={props.className}>
-      <div className='info'>
-        <h3 id='coordinates'>Coordinates (2, 2)</h3>
-        <h3 id='steps'>You moved 0 times</h3>
+    <div id="wrapper" className={props.className}>
+      <div className="info">
+        <h3 id="coordinates">Coordinates (2, 2)</h3>
+        <h3 id="steps">You moved 0 times</h3>
       </div>
-      <div id='grid'>
+      <div id="grid">
         {grid.map((idx, i) => (
           <div key={i} className={`square${idx === true ? ' active' : ''}`}>
-            {idx === true ? 'B' : null}
+            {idx === true ? 'B' : `${i}`}
           </div>
         ))}
       </div>
-      <div className='info'>
-        <h3 id='message'></h3>
+      <div className="info">
+        <h3 id="message"></h3>
       </div>
-      <div id='keypad'>
-        <button id='left' onClick={move}>
+      <div id="keypad">
+        <button id="left" onClick={move}>
           LEFT
         </button>
-        <button id='up' onClick={move}>
+        <button id="up" onClick={move}>
           UP
         </button>
-        <button id='right' onClick={move}>
+        <button id="right" onClick={move}>
           RIGHT
         </button>
-        <button id='down' onClick={move}>
+        <button id="down" onClick={move}>
           DOWN
         </button>
-        <button id='reset'>reset</button>
+        <button id="reset">reset</button>
       </div>
       <form>
-        <input id='email' type='email' placeholder='type email'></input>
-        <input id='submit' type='submit'></input>
+        <input id="email" type="email" placeholder="type email"></input>
+        <input id="submit" type="submit"></input>
       </form>
     </div>
   );
