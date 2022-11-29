@@ -17,6 +17,19 @@ const initialGrid = [
   false, //(3.3)
 ];
 
+// TODO: refactor to be objects instead of strings
+const coordinates = [
+  '(1,1)',
+  '(1,2)',
+  '(1,3)',
+  '(2,1)',
+  '(2,2)',
+  '(2,3)',
+  '(3,1)',
+  '(3,2)',
+  '(3,3)',
+];
+
 const nextIndexes = [
   // (1,1)
   {
@@ -76,6 +89,7 @@ export default function AppFunctional(props) {
   // You can delete them and build your own logic from scratch.
   const [grid, setGrid] = useState(initialGrid);
   const [moves, setMoves] = useState(0);
+  const [coordinate, setCoordinate] = useState('(2, 2)');
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -132,6 +146,7 @@ export default function AppFunctional(props) {
     gridCopy[previousPosition] = false;
     gridCopy[nextPosition] = true;
 
+    setCoordinate(coordinates[nextPosition]);
     setGrid(gridCopy);
     setMoves((current) => {
       return current + 1;
@@ -148,13 +163,13 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates (2, 2)</h3>
+        <h3 id="coordinates">Coordinates {coordinate}</h3>
         <h3 id="steps">You moved {moves} times</h3>
       </div>
       <div id="grid">
         {grid.map((idx, i) => (
           <div key={i} className={`square${idx === true ? ' active' : ''}`}>
-            {idx === true ? 'B' : `${i}`}
+            {idx === true ? 'B' : null}
           </div>
         ))}
       </div>
