@@ -75,6 +75,7 @@ export default function AppFunctional(props) {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
   const [grid, setGrid] = useState(initialGrid);
+  const [moves, setMoves] = useState(0);
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -93,6 +94,7 @@ export default function AppFunctional(props) {
    */
   function reset() {
     setGrid(initialGrid);
+    setMoves(0);
   }
 
   /**
@@ -119,15 +121,21 @@ export default function AppFunctional(props) {
     const direction = event.target.id;
     const nextIndexes = getNextIndex(direction);
     const nextPosition = nextIndexes[direction];
+
     if (nextIndexes[direction] === undefined) {
       console.log('Unable to move!');
       return;
     }
+
     const previousPosition = grid.indexOf(true);
     const gridCopy = [...grid];
     gridCopy[previousPosition] = false;
     gridCopy[nextPosition] = true;
+
     setGrid(gridCopy);
+    setMoves((current) => {
+      return current + 1;
+    });
   }
 
   function onChange(evt) {
@@ -141,7 +149,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">Coordinates (2, 2)</h3>
-        <h3 id="steps">You moved 0 times</h3>
+        <h3 id="steps">You moved {moves} times</h3>
       </div>
       <div id="grid">
         {grid.map((idx, i) => (
