@@ -84,7 +84,10 @@ export default class AppClass extends React.Component {
           <h3 id='coordinates'>
             Coordinates ({this.state.coordinate.x},{this.state.coordinate.y})
           </h3>
-          <h3 id='steps'>You moved {this.state.moves} times</h3>
+          <h3 id='steps'>
+            You moved {this.state.moves}{' '}
+            {this.state.moves === 1 ? 'time' : 'times'}
+          </h3>
         </div>
         <div id='grid'>
           {this.state.grid.map((idx, i) => (
