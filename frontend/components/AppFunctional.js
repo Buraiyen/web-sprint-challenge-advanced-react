@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 // Suggested initial states
 const initialMessage = '';
@@ -120,6 +121,7 @@ export default function AppFunctional(props) {
   const [coordinate, setCoordinate] = useState({ x: 2, y: 2 });
   const [formData, setFormData] = useState('');
   const [message, setMessage] = useState('');
+  const [postData, setPostData] = useState(null);
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -191,8 +193,23 @@ export default function AppFunctional(props) {
     setFormData(value);
   }
 
-  function onSubmit(evt) {
+  function submitHandler(event) {
     // Use a POST request to send a payload to the server.
+    event.preventDefault();
+    const data = {
+      email: formData,
+      x: coordinate.x,
+      y: coordinate.y,
+      steps: moves,
+    };
+    axios
+      .post('http://localhost:9000/api/result', data)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   return (
     <div id='wrapper' className={props.className}>
@@ -229,7 +246,7 @@ export default function AppFunctional(props) {
           reset
         </button>
       </div>
-      <form>
+      <form onSubmit={submitHandler}>
         <input
           id='email'
           type='email'
