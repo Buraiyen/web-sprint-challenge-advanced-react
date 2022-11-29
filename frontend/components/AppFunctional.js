@@ -130,6 +130,7 @@ export default function AppFunctional(props) {
   const [grid, setGrid] = useState(initialGrid);
   const [moves, setMoves] = useState(0);
   const [coordinate, setCoordinate] = useState({ x: 2, y: 2 });
+  const [formData, setFormData] = useState('');
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -194,8 +195,10 @@ export default function AppFunctional(props) {
     });
   }
 
-  function onChange(evt) {
+  function inputChangeHandler(event) {
     // You will need this to update the value of the input.
+    const { value } = event.target;
+    setFormData(value);
   }
 
   function onSubmit(evt) {
@@ -237,7 +240,13 @@ export default function AppFunctional(props) {
         </button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="type email"></input>
+        <input
+          id="email"
+          type="email"
+          placeholder="type email"
+          onChange={inputChangeHandler}
+          value={formData}
+        ></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
