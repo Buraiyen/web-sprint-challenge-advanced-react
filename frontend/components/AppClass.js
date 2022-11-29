@@ -17,29 +17,38 @@ export default class AppClass extends React.Component {
     };
   }
   getXY = () => {
-    // It it not necessary to have a state to track the coordinates.
-    // It's enough to know what index the "B" is at, to be able to calculate them.
-  };
-
-  getXYMessage = () => {
-    // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
-    // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
-    // returns the fully constructed string.
+    return this.state.grid.indexOf(true);
   };
 
   reset = () => {
-    // Use this helper to reset all states to their initial values.
+    this.setState({ grid: initialGrid, moves: 0, coordinate: { x: 2, y: 2 } });
   };
 
-  getNextIndex = (direction) => {
-    // This helper takes a direction ("left", "up", etc) and calculates what the next index
-    // of the "B" would be. If the move is impossible because we are at the edge of the grid,
-    // this helper should return the current index unchanged.
+  getNextIndex = () => {
+    const currentXY = this.getXY();
+    return nextIndexes[currentXY];
   };
 
-  move = (evt) => {
-    // This event handler can use the helper above to obtain a new index for the "B",
-    // and change any states accordingly.
+  move = (event) => {
+    const direction = event.target.id;
+    const nextIndexes = this.getNextIndex(direction);
+    if (nextIndexes[direction] === undefined) {
+      this.setState({ message: `You can't go ${direction}` });
+      return;
+    }
+    const nextPosition = nextIndexes[direction];
+    const previousPosition = this.state.grid.indexOf(true);
+    const gridCopy = [...this.state.grid];
+    gridCopy[previousPosition] = false;
+    gridCopy[nextPosition] = true;
+
+    const updatedMoves = this.state.moves + 1;
+    this.setState({
+      coordinates: coordinates[nextPosition],
+      grid: gridCopy,
+      message: '',
+      moves: updatedMoves,
+    });
   };
 
   onChange = (evt) => {
@@ -69,10 +78,18 @@ export default class AppClass extends React.Component {
           <h3 id='message'></h3>
         </div>
         <div id='keypad'>
-          <button id='left'>LEFT</button>
-          <button id='up'>UP</button>
-          <button id='right'>RIGHT</button>
-          <button id='down'>DOWN</button>
+          <button id='left' onClick={this.move}>
+            LEFT
+          </button>
+          <button id='up' onClick={this.move}>
+            UP
+          </button>
+          <button id='right' onClick={this.move}>
+            RIGHT
+          </button>
+          <button id='down' onClick={this.move}>
+            DOWN
+          </button>
           <button id='reset'>reset</button>
         </div>
         <form>
