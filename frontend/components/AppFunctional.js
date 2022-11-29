@@ -1,10 +1,5 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-// Suggested initial states
-const initialMessage = '';
-const initialEmail = '';
-const initialSteps = 0;
-const initialIndex = 4; // the index the "B" is at
 
 const initialGrid = [
   false, //(1,1)
@@ -121,7 +116,6 @@ export default function AppFunctional(props) {
   const [coordinate, setCoordinate] = useState({ x: 2, y: 2 });
   const [formData, setFormData] = useState('');
   const [message, setMessage] = useState('');
-  const [postData, setPostData] = useState(null);
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -205,10 +199,12 @@ export default function AppFunctional(props) {
     axios
       .post('http://localhost:9000/api/result', data)
       .then((res) => {
-        console.log(res.data);
+        setMessage(res.data.message);
       })
       .catch((err) => {
-        console.log(err);
+        let error = err.request.response;
+        error = JSON.parse(error);
+        setMessage(error.message);
       });
   }
   return (
