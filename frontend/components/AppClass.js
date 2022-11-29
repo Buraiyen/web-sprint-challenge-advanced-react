@@ -65,7 +65,7 @@ export default class AppClass extends React.Component {
       <div id='wrapper' className={className}>
         <div className='info'>
           <h3 id='coordinates'>Coordinates (2, 2)</h3>
-          <h3 id='steps'>You moved 0 times</h3>
+          <h3 id='steps'>You moved {this.state.moves} times</h3>
         </div>
         <div id='grid'>
           {this.state.grid.map((idx, i) => (
@@ -75,7 +75,7 @@ export default class AppClass extends React.Component {
           ))}
         </div>
         <div className='info'>
-          <h3 id='message'></h3>
+          <h3 id='message'>{this.state.message}</h3>
         </div>
         <div id='keypad'>
           <button id='left' onClick={this.move}>
