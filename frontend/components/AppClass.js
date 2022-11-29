@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 import { initialGrid, coordinates, nextIndexes } from './initialData';
 
 export default class AppClass extends React.Component {
@@ -56,8 +56,24 @@ export default class AppClass extends React.Component {
     this.setState({ formData: value });
   };
 
-  onSubmit = (evt) => {
-    // Use a POST request to send a payload to the server.
+  submitHandler = (event) => {
+    event.preventDefault();
+    const data = {
+      email: this.state.formData,
+      x: this.state.coordinate.x,
+      y: this.state.coordinate.y,
+      steps: this.state.moves,
+    };
+    axios
+      .post('http://localhost:9000/api/result', data)
+      .then((res) => {
+        this.setState({ message: res.data.message });
+      })
+      .catch((err) => {
+        let error = err.request.response;
+        error = JSON.parse(error);
+        this.setState({ message: error.message });
+      });
   };
 
   render() {
@@ -97,7 +113,7 @@ export default class AppClass extends React.Component {
             reset
           </button>
         </div>
-        <form>
+        <form onSubmit={this.submitHandler}>
           <input
             id='email'
             type='email'
