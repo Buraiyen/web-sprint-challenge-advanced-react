@@ -51,8 +51,9 @@ export default class AppClass extends React.Component {
     });
   };
 
-  onChange = (evt) => {
-    // You will need this to update the value of the input.
+  inputChangeHandler = (event) => {
+    const { value } = event.target;
+    this.setState({ formData: value });
   };
 
   onSubmit = (evt) => {
@@ -97,7 +98,13 @@ export default class AppClass extends React.Component {
           </button>
         </div>
         <form>
-          <input id='email' type='email' placeholder='type email'></input>
+          <input
+            id='email'
+            type='email'
+            placeholder='type email'
+            onChange={this.inputChangeHandler}
+            value={this.state.formData}
+          ></input>
           <input id='submit' type='submit'></input>
         </form>
       </div>
