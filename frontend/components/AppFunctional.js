@@ -6,18 +6,18 @@ const initialSteps = 0;
 const initialIndex = 4; // the index the "B" is at
 
 const initialGrid = [
-  false,
-  false,
-  false,
-  false,
-  true,
-  false,
-  false,
-  false,
-  false,
+  false, //(1,1)
+  false, //(1,2)
+  false, //(1,3)
+  false, //(2,1)
+  true, //(2,2)
+  false, //(2,3)
+  false, //(3,1)
+  false, //(3,2)
+  false, //(3.3)
 ];
 
-const next = [
+const nextIndexes = [
   // (1,1)
   {
     right: 1,
@@ -96,13 +96,26 @@ export default function AppFunctional(props) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
-    const currentXY = getX();
+    const currentXY = getXY();
+    return nextIndexes[currentXY];
   }
 
-  function move(evt) {
+  function move(event) {
     // This event handler can use the helper above to obtain a new index for the "B",
     // and change any states accordingly.
-    console.log(getXY());
+    const direction = event.target.id;
+    const nextIndexes = getNextIndex(direction);
+    const nextPosition = nextIndexes[direction];
+    console.log(nextIndexes);
+    if (nextIndexes[direction] === undefined) {
+      console.log('Unable to move!');
+      return;
+    }
+    let previousPosition = grid.indexOf(true);
+    const gridCopy = [...grid];
+    gridCopy[previousPosition] = false;
+    gridCopy[nextPosition] = true;
+    setGrid(gridCopy);
   }
 
   function onChange(evt) {
