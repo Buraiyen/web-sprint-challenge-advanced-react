@@ -1,35 +1,21 @@
 import React, { useState } from 'react';
 
-// Suggested initial states
-const initialMessage = '';
-const initialEmail = '';
-const initialSteps = 0;
-const initialIndex = 4; // the index the "B" is at
-
-const initialState = {
-  message: initialMessage,
-  email: initialEmail,
-  index: initialIndex,
-  steps: initialSteps,
-};
-
-const initialGrid = [
-  false,
-  false,
-  false,
-  false,
-  true,
-  false,
-  false,
-  false,
-  false,
-];
-// set an array [false, false, true, etc.]
+import { initialGrid, coordinates, nextIndexes } from './initialData';
 
 export default class AppClass extends React.Component {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
 
+  constructor() {
+    super();
+    this.state = {
+      grid: initialGrid,
+      moves: 0,
+      coordinate: { x: 2, y: 2 },
+      formData: '',
+      message: '',
+    };
+  }
   getXY = () => {
     // It it not necessary to have a state to track the coordinates.
     // It's enough to know what index the "B" is at, to be able to calculate them.
@@ -73,9 +59,9 @@ export default class AppClass extends React.Component {
           <h3 id='steps'>You moved 0 times</h3>
         </div>
         <div id='grid'>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
-            <div key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
-              {idx === 3 ? 'B' : null}
+          {this.state.grid.map((idx, i) => (
+            <div key={i} className={`square${idx === true ? ' active' : ''}`}>
+              {idx === true ? 'B' : null}
             </div>
           ))}
         </div>
