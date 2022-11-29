@@ -17,53 +17,41 @@ const initialGrid = [
   false, //(3.3)
 ];
 
-// TODO: refactor to be objects instead of strings
-// const coordinates = [
-//   '(1,1)',
-//   '(1,2)',
-//   '(1,3)',
-//   '(2,1)',
-//   '(2,2)',
-//   '(2,3)',
-//   '(3,1)',
-//   '(3,2)',
-//   '(3,3)',
-// ];
-
 const coordinates = [
   {
     x: 1,
     y: 1,
   },
+  {
+    x: 2,
+    y: 1,
+  },
+  {
+    x: 3,
+    y: 1,
+  },
+  {
+    x: 1,
+    y: 2,
+  },
+  {
+    x: 2,
+    y: 2,
+  },
+  {
+    x: 3,
+    y: 2,
+  },
+  {
+    x: 1,
+    y: 3,
+  },
 
   {
-    x: 1,
-    y: 2,
-  },
-  {
-    x: 1,
-    y: 3,
-  },
-  {
-    x: 2,
-    y: 1,
-  },
-  {
-    x: 2,
-    y: 2,
-  },
-  {
     x: 2,
     y: 3,
   },
-  {
-    x: 3,
-    y: 1,
-  },
-  {
-    x: 3,
-    y: 2,
-  },
+
   {
     x: 3,
     y: 3,
@@ -131,6 +119,7 @@ export default function AppFunctional(props) {
   const [moves, setMoves] = useState(0);
   const [coordinate, setCoordinate] = useState({ x: 2, y: 2 });
   const [formData, setFormData] = useState('');
+  const [message, setMessage] = useState('');
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -179,7 +168,7 @@ export default function AppFunctional(props) {
     const nextPosition = nextIndexes[direction];
 
     if (nextIndexes[direction] === undefined) {
-      console.log('Unable to move!');
+      setMessage(`You can't go ${direction}`);
       return;
     }
 
@@ -190,6 +179,7 @@ export default function AppFunctional(props) {
 
     setCoordinate(coordinates[nextPosition]);
     setGrid(gridCopy);
+    setMessage('');
     setMoves((current) => {
       return current + 1;
     });
@@ -205,49 +195,49 @@ export default function AppFunctional(props) {
     // Use a POST request to send a payload to the server.
   }
   return (
-    <div id="wrapper" className={props.className}>
-      <div className="info">
-        <h3 id="coordinates">
+    <div id='wrapper' className={props.className}>
+      <div className='info'>
+        <h3 id='coordinates'>
           Coordinates ({coordinate.x},{coordinate.y})
         </h3>
-        <h3 id="steps">You moved {moves} times</h3>
+        <h3 id='steps'>You moved {moves} times</h3>
       </div>
-      <div id="grid">
+      <div id='grid'>
         {grid.map((idx, i) => (
           <div key={i} className={`square${idx === true ? ' active' : ''}`}>
             {idx === true ? 'B' : null}
           </div>
         ))}
       </div>
-      <div className="info">
-        <h3 id="message"></h3>
+      <div className='info'>
+        <h3 id='message'>{message}</h3>
       </div>
-      <div id="keypad">
-        <button id="left" onClick={move}>
+      <div id='keypad'>
+        <button id='left' onClick={move}>
           LEFT
         </button>
-        <button id="up" onClick={move}>
+        <button id='up' onClick={move}>
           UP
         </button>
-        <button id="right" onClick={move}>
+        <button id='right' onClick={move}>
           RIGHT
         </button>
-        <button id="down" onClick={move}>
+        <button id='down' onClick={move}>
           DOWN
         </button>
-        <button id="reset" onClick={reset}>
+        <button id='reset' onClick={reset}>
           reset
         </button>
       </div>
       <form>
         <input
-          id="email"
-          type="email"
-          placeholder="type email"
+          id='email'
+          type='email'
+          placeholder='type email'
           onChange={inputChangeHandler}
           value={formData}
         ></input>
-        <input id="submit" type="submit"></input>
+        <input id='submit' type='submit'></input>
       </form>
     </div>
   );
