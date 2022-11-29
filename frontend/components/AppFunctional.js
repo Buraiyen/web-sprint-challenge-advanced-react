@@ -149,6 +149,7 @@ export default function AppFunctional(props) {
   function reset() {
     setGrid(initialGrid);
     setMoves(0);
+    setCoordinate({ x: 2, y: 2 });
   }
 
   /**
