@@ -18,16 +18,56 @@ const initialGrid = [
 ];
 
 // TODO: refactor to be objects instead of strings
+// const coordinates = [
+//   '(1,1)',
+//   '(1,2)',
+//   '(1,3)',
+//   '(2,1)',
+//   '(2,2)',
+//   '(2,3)',
+//   '(3,1)',
+//   '(3,2)',
+//   '(3,3)',
+// ];
+
 const coordinates = [
-  '(1,1)',
-  '(1,2)',
-  '(1,3)',
-  '(2,1)',
-  '(2,2)',
-  '(2,3)',
-  '(3,1)',
-  '(3,2)',
-  '(3,3)',
+  {
+    x: 1,
+    y: 1,
+  },
+
+  {
+    x: 1,
+    y: 2,
+  },
+  {
+    x: 1,
+    y: 3,
+  },
+  {
+    x: 2,
+    y: 1,
+  },
+  {
+    x: 2,
+    y: 2,
+  },
+  {
+    x: 2,
+    y: 3,
+  },
+  {
+    x: 3,
+    y: 1,
+  },
+  {
+    x: 3,
+    y: 2,
+  },
+  {
+    x: 3,
+    y: 3,
+  },
 ];
 
 const nextIndexes = [
@@ -89,7 +129,7 @@ export default function AppFunctional(props) {
   // You can delete them and build your own logic from scratch.
   const [grid, setGrid] = useState(initialGrid);
   const [moves, setMoves] = useState(0);
-  const [coordinate, setCoordinate] = useState('(2, 2)');
+  const [coordinate, setCoordinate] = useState({ x: 2, y: 2 });
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.
@@ -163,7 +203,9 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Coordinates {coordinate}</h3>
+        <h3 id="coordinates">
+          Coordinates ({coordinate.x},{coordinate.y})
+        </h3>
         <h3 id="steps">You moved {moves} times</h3>
       </div>
       <div id="grid">
