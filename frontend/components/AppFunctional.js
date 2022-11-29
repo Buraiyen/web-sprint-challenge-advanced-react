@@ -88,30 +88,42 @@ export default function AppFunctional(props) {
     // returns the fully constructed string.
   }
 
+  /**
+   * resets all states
+   */
   function reset() {
-    // Use this helper to reset all states to their initial values.
+    setGrid(initialGrid);
   }
 
-  function getNextIndex(direction) {
-    // This helper takes a direction ("left", "up", etc) and calculates what the next index
-    // of the "B" would be. If the move is impossible because we are at the edge of the grid,
-    // this helper should return the current index unchanged.
+  /**
+   * @returns object of next possible moves
+   */
+  function getNextIndex() {
     const currentXY = getXY();
     return nextIndexes[currentXY];
   }
 
+  /**
+   * The function first gets an object that contains
+   * the next possible moves. If the direction that
+   * the user provided is not inside of that object,
+   * then the function would notify the user saying
+   * that move is not possible. Else, the grid will
+   * update itself by setting the next position
+   * to be true and the previous position to be
+   * false
+   *
+   * @param {*} event - gets the direction
+   */
   function move(event) {
-    // This event handler can use the helper above to obtain a new index for the "B",
-    // and change any states accordingly.
     const direction = event.target.id;
     const nextIndexes = getNextIndex(direction);
     const nextPosition = nextIndexes[direction];
-    console.log(nextIndexes);
     if (nextIndexes[direction] === undefined) {
       console.log('Unable to move!');
       return;
     }
-    let previousPosition = grid.indexOf(true);
+    const previousPosition = grid.indexOf(true);
     const gridCopy = [...grid];
     gridCopy[previousPosition] = false;
     gridCopy[nextPosition] = true;
@@ -154,7 +166,9 @@ export default function AppFunctional(props) {
         <button id="down" onClick={move}>
           DOWN
         </button>
-        <button id="reset">reset</button>
+        <button id="reset" onClick={reset}>
+          reset
+        </button>
       </div>
       <form>
         <input id="email" type="email" placeholder="type email"></input>
