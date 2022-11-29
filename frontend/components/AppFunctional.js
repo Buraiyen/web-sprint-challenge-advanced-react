@@ -31,7 +31,7 @@ const nextIndexes = [
   },
   // (1,3)
   {
-    left: 0,
+    left: 1,
     down: 5,
   },
   // (2,1)
