@@ -31,6 +31,8 @@ export default function AppFunctional(props) {
     setGrid(initialGrid);
     setMoves(0);
     setCoordinate({ x: 2, y: 2 });
+    setMessage('');
+    setFormData('');
   }
 
   /**
@@ -101,6 +103,7 @@ export default function AppFunctional(props) {
         error = JSON.parse(error);
         setMessage(error.message);
       });
+    setFormData('');
   }
   return (
     <div id='wrapper' className={props.className}>

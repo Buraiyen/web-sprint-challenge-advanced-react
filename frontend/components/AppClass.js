@@ -21,7 +21,13 @@ export default class AppClass extends React.Component {
   };
 
   reset = () => {
-    this.setState({ grid: initialGrid, moves: 0, coordinate: { x: 2, y: 2 } });
+    this.setState({
+      grid: initialGrid,
+      moves: 0,
+      coordinate: { x: 2, y: 2 },
+      formData: '',
+      message: '',
+    });
   };
 
   getNextIndex = () => {
@@ -74,6 +80,7 @@ export default class AppClass extends React.Component {
         error = JSON.parse(error);
         this.setState({ message: error.message });
       });
+    this.setState({ formData: '' });
   };
 
   render() {
