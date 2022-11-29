@@ -44,7 +44,7 @@ export default class AppClass extends React.Component {
 
     const updatedMoves = this.state.moves + 1;
     this.setState({
-      coordinates: coordinates[nextPosition],
+      coordinate: coordinates[nextPosition],
       grid: gridCopy,
       message: '',
       moves: updatedMoves,
@@ -64,7 +64,9 @@ export default class AppClass extends React.Component {
     return (
       <div id='wrapper' className={className}>
         <div className='info'>
-          <h3 id='coordinates'>Coordinates (2, 2)</h3>
+          <h3 id='coordinates'>
+            Coordinates ({this.state.coordinate.x},{this.state.coordinate.y})
+          </h3>
           <h3 id='steps'>You moved {this.state.moves} times</h3>
         </div>
         <div id='grid'>
@@ -90,7 +92,9 @@ export default class AppClass extends React.Component {
           <button id='down' onClick={this.move}>
             DOWN
           </button>
-          <button id='reset'>reset</button>
+          <button id='reset' onClick={this.reset}>
+            reset
+          </button>
         </div>
         <form>
           <input id='email' type='email' placeholder='type email'></input>
